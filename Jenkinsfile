@@ -8,6 +8,7 @@ pipeline {
         stage('Build'){
             steps {
                 bat 'mvn package'
+                bat 'docker build . -t tomcatwebapp:${env.BUILD_ID}'
             }
             post {
                 success {
@@ -16,7 +17,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Deploy to Staging'){
             steps {
                 build job: 'deploy-to-staging'
